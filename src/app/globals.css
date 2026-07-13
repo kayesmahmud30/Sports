@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  /* ── Lighter / Brighter Sports Palette ── */
+  --emerald-900: 6, 78, 59;
+  --emerald-700: 4, 120, 87;
+  --emerald-600: 5, 150, 105;
+  --emerald-500: 16, 185, 129;
+  --emerald-400: 52, 211, 153;
+  --emerald-100: 209, 250, 229;
+  --emerald-50: 236, 253, 245;
+
+  --orange-500: 249, 115, 22;
+  --orange-400: 251, 146, 60;
+  --orange-100: 255, 237, 213;
+
+  /* ── Semantic Tokens ── */
+  --color-bg-rgb: 244, 246, 249;        /* warm light background */
+  --color-surface-rgb: 255, 255, 255;   /* pure white cards */
+  --color-surface-alt-rgb: 238, 242, 246; /* subtle card alt */
+  --color-text: #0f172a;                /* deep slate */
+  --color-text-secondary: #475569;      /* medium slate */
+  --color-muted: #94a3b8;               /* light slate */
+  --color-border: #e2e8f0;              /* soft border */
+  --color-primary-rgb: var(--emerald-600);
+  --color-primary-light: rgb(var(--emerald-100));
+  --color-accent-rgb: var(--orange-500);
+  --focus-ring: rgba(var(--emerald-600), 0.12);
+
+    /* ── Shadows ── */
+  --shadow-premium-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-premium-md: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-premium-lg: 0 10px 30px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-premium-xl: 0 20px 50px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Shadow Utility Classes ── */
+.shadow-premium-sm {
+  box-shadow: var(--shadow-premium-sm);
+}
+.shadow-premium-md {
+  box-shadow: var(--shadow-premium-md);
+}
+.shadow-premium-lg {
+  box-shadow: var(--shadow-premium-lg);
+}
+.shadow-premium-xl {
+  box-shadow: var(--shadow-premium-xl);
+}
+
+/* ── Typography ── */
+body {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* ── Semantic Utility Classes ── */
+.bg-theme {
+  background-color: rgb(var(--color-bg-rgb));
+}
+.bg-surface {
+  background-color: rgb(var(--color-surface-rgb));
+}
+.bg-surface-alt {
+  background-color: rgb(var(--color-surface-alt-rgb));
+}
+.text-theme {
+  color: var(--color-text);
+}
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+.muted-text {
+  color: var(--color-muted);
+}
+.border-theme {
+  border-color: var(--color-border);
+}
+.text-primary {
+  color: rgb(var(--color-primary-rgb));
+}
+.text-accent {
+  color: rgb(var(--color-accent-rgb));
+}
+
+/* ── Premium Buttons ── */
+.btn-premium {
+  background: linear-gradient(135deg, rgb(var(--emerald-600)), rgb(var(--emerald-500)));
+  color: white;
+  box-shadow: 0 4px 16px rgba(var(--emerald-600), 0.25);
+  transition: all 0.3s ease;
+}
+.btn-premium:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(var(--emerald-600), 0.35);
+}
+.btn-premium:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(var(--emerald-600), 0.2);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, rgb(var(--orange-500)), rgb(var(--orange-400)));
+  color: white;
+  box-shadow: 0 4px 16px rgba(var(--orange-500), 0.25);
+  transition: all 0.3s ease;
+}
+.btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(var(--orange-500), 0.35);
+}
+
+.btn-ghost-premium {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: all 0.3s ease;
+}
+.btn-ghost-premium:hover {
+  border-color: rgb(var(--emerald-600));
+  color: rgb(var(--emerald-600));
+  background: rgb(var(--emerald-50));
+}
+
+/* ── Premium Cards ── */
+.card-premium {
+  background: rgb(var(--color-surface-rgb));
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-premium-md);
+  transition: all 0.3s ease;
+}
+.card-premium:hover {
+  box-shadow: var(--shadow-premium-lg);
+  border-color: rgba(var(--emerald-600), 0.15);
+}
+
+.card-glass {
+  background: rgba(var(--color-surface-rgb), 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+/* ── Gradient Text ── */
+.gradient-text-emerald {
+  background: linear-gradient(135deg, rgb(var(--emerald-600)), rgb(var(--emerald-400)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-text-accent {
+  background: linear-gradient(135deg, rgb(var(--orange-500)), rgb(var(--emerald-500)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Focus & Input Styles ── */
+input:focus,
+textarea:focus,
+select:focus,
+.focus-theme {
+  outline: none;
+  border-color: rgb(var(--emerald-600));
+  box-shadow: 0 0 0 3px rgba(var(--emerald-600), 0.1);
+}
+
+/* ── Utility Overlays ── */
+.gradient-overlay {
+  background: linear-gradient(to top, rgba(255,255,255,0.9), transparent 60%);
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
+}
+
+/* ── DaisyUI Overrides ── */
+:where(.btn) {
+  border-radius: 9999px !important;
+}
