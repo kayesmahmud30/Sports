@@ -323,7 +323,7 @@ const Allfacility = ({ data: _initialData }: AllfacilityProps) => {
           <div
             className={`transition-all duration-500 ease-in-out ${
               view === "grid"
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                 : "grid grid-cols-1 gap-4"
             }`}
           >
@@ -345,7 +345,7 @@ const Allfacility = ({ data: _initialData }: AllfacilityProps) => {
           <div
             className={`transition-all duration-500 ease-in-out ${
               view === "grid"
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                 : "grid grid-cols-1 gap-4"
             }`}
           >
