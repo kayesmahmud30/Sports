@@ -113,7 +113,7 @@ const Nav = () => {
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <span className="hidden sm:block text-sm font-medium text-slate-700 truncate max-w-[100px]">
+                <span className="hidden lg:block text-sm font-medium text-slate-700 truncate max-w-[100px]">
                   {user.name}
                 </span>
                 <ChevronDown size={14} className={`text-slate-400 transition-transform duration-200 ${profileOpen ? "rotate-180" : ""}`} />

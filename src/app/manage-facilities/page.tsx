@@ -139,8 +139,8 @@ const MyFacilities = () => {
               </p>
             </div>
             <Link href="/add-facilities">
-              <Button className="h-11 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 text-sm font-bold tracking-wide text-white shadow-premium-md transition-all duration-300 hover:shadow-premium-lg hover:scale-[1.02] active:scale-[0.98]">
-                <Plus size={16} />
+              <Button className="h-11 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 text-sm font-bold tracking-wide text-white shadow-premium-md transition-all duration-300 hover:shadow-premium-lg hover:scale-[1.02] active:scale-[0.98] flex items-center gap-1">
+                <Plus size={20} />
                 Add Facility
               </Button>
             </Link>

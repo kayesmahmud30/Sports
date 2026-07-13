@@ -100,18 +100,18 @@ const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps)
       {/* Delete Button */}
       <Button
         onPress={() => setIsDeleteOpen(true)}
-        className="group relative overflow-hidden rounded-xl border border-red-200 bg-red-50 px-5 py-2.5 h-auto min-w-0 text-red-600 text-sm font-medium transition-all duration-200 hover:bg-red-100 hover:scale-[0.97] cursor-pointer"
+        className="group relative overflow-hidden rounded-xl border border-red-200 bg-red-50 px-5 py-2.5 h-auto min-w-0 text-red-600 text-sm font-medium transition-all duration-200 hover:bg-red-100 hover:scale-[0.97] cursor-pointer flex items-center gap-1"
       >
-        <Trash2 size={15} />
+        <Trash2 size={18} />
         Delete
       </Button>
 
       {/* Edit Button */}
       <Button
         onPress={() => setIsEditOpen(true)}
-        className="group relative overflow-hidden rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-2.5 h-auto min-w-0 text-emerald-700 text-sm font-medium transition-all duration-200 hover:bg-emerald-100 hover:scale-[0.97] cursor-pointer"
+        className="group relative overflow-hidden rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-2.5 h-auto min-w-0 text-emerald-700 text-sm font-medium transition-all duration-200 hover:bg-emerald-100 hover:scale-[0.97] cursor-pointer flex items-center gap-1"
       >
-        <Edit size={15} />
+        <Edit size={18} />
         Edit
       </Button>
 
