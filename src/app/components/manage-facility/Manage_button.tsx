@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { AlertDialog, Button } from "@heroui/react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Button } from "@heroui/react";
 import { Edit, Trash2, X } from "lucide-react";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import { toast } from "react-toastify";
@@ -16,6 +17,7 @@ interface ManageButtonProps {
 
 const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [formData, setFormData] = useState({
     facilityName: facility?.facilityName || "",
     location: facility?.location || "",
@@ -23,6 +25,18 @@ const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps)
     pricePerHour: facility?.pricePerHour?.toString() || "",
     capacity: facility?.capacity?.toString() || "",
   });
+
+  // Lock body scroll when any modal is open
+  useEffect(() => {
+    if (isEditOpen || isDeleteOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isEditOpen, isDeleteOpen]);
 
   const handleDeleteClick = async () => {
     try {
@@ -37,6 +51,7 @@ const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps)
       if (res.ok) {
         toast.success("Deleted successfully!");
         setFacilities((prev) => prev.filter((item) => item._id !== facility._id));
+        setIsDeleteOpen(false);
       } else {
         toast.error("Delete failed");
       }
@@ -82,55 +97,14 @@ const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps)
 
   return (
     <div className="mt-5 pt-4 border-t border-slate-100 flex gap-3 items-center flex-wrap">
-      {/* Delete Button + Alert Dialog */}
-      <AlertDialog>
-        <Button
-          className="group relative overflow-hidden rounded-xl border border-red-200 bg-red-50 px-5 py-2.5 h-auto min-w-0 text-red-600 text-sm font-medium transition-all duration-200 hover:bg-red-100 hover:scale-[0.97] cursor-pointer"
-        >
-          <Trash2 size={15} />
-          Delete
-        </Button>
-
-        <AlertDialog.Backdrop className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md px-4">
-          <AlertDialog.Container>
-            <AlertDialog.Dialog className="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-premium-xl border border-slate-200 relative">
-              <div className="p-7">
-                <AlertDialog.Header className="text-center">
-                  <div className="mx-auto flex items-center justify-center w-16 h-16 rounded-2xl bg-red-50 border border-red-100 mb-4">
-                    <FaTriangleExclamation className="text-red-500 text-3xl" />
-                  </div>
-                  <AlertDialog.Heading className="text-2xl font-bold text-slate-900">
-                    Delete Facility?
-                  </AlertDialog.Heading>
-                </AlertDialog.Header>
-                <AlertDialog.Body className="text-center mt-2 text-slate-500 text-sm leading-relaxed">
-                  This action cannot be undone. Your facility listing will be removed permanently.
-                </AlertDialog.Body>
-                <div className="mt-4 text-center">
-                  <div className="inline-flex items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700">
-                    {facility.facilityName}
-                  </div>
-                </div>
-                <AlertDialog.Footer className="flex flex-col gap-3 mt-6">
-                  <Button
-                    onPress={handleDeleteClick}
-                    className="h-11 rounded-2xl bg-red-500 text-sm font-bold text-white shadow-premium-md transition-all duration-200 hover:bg-red-600 hover:shadow-premium-lg hover:scale-[0.98] cursor-pointer"
-                  >
-                    Yes, Delete Listing
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    slot="close"
-                    className="h-11 rounded-2xl border border-slate-200 text-slate-600 text-sm font-medium transition-all duration-200 hover:bg-slate-50 hover:scale-[0.98] cursor-pointer"
-                  >
-                    Keep Listing
-                  </Button>
-                </AlertDialog.Footer>
-              </div>
-            </AlertDialog.Dialog>
-          </AlertDialog.Container>
-        </AlertDialog.Backdrop>
-      </AlertDialog>
+      {/* Delete Button */}
+      <Button
+        onPress={() => setIsDeleteOpen(true)}
+        className="group relative overflow-hidden rounded-xl border border-red-200 bg-red-50 px-5 py-2.5 h-auto min-w-0 text-red-600 text-sm font-medium transition-all duration-200 hover:bg-red-100 hover:scale-[0.97] cursor-pointer"
+      >
+        <Trash2 size={15} />
+        Delete
+      </Button>
 
       {/* Edit Button */}
       <Button
@@ -141,10 +115,55 @@ const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps)
         Edit
       </Button>
 
-      {/* Edit Modal */}
-      {isEditOpen && (
-        <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-premium-xl border border-slate-200">
+      {/* Delete Modal — inlined JSX, not a component, to preserve focus */}
+      {isDeleteOpen && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/30 px-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsDeleteOpen(false); }}
+        >
+          <div className="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-premium-xl border border-slate-200 relative animate-fadeIn">
+            <div className="p-7">
+              <div className="text-center">
+                <div className="mx-auto flex items-center justify-center w-16 h-16 rounded-2xl bg-red-50 border border-red-100 mb-4">
+                  <FaTriangleExclamation className="text-red-500 text-3xl" />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-900">Delete Facility?</h2>
+              </div>
+              <p className="text-center mt-2 text-slate-500 text-sm leading-relaxed">
+                This action cannot be undone. Your facility listing will be removed permanently.
+              </p>
+              <div className="mt-4 text-center">
+                <div className="inline-flex items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700">
+                  {facility.facilityName}
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 mt-6">
+                <Button
+                  onPress={handleDeleteClick}
+                  className="h-11 rounded-2xl bg-red-500 text-sm font-bold text-white shadow-premium-md transition-all duration-200 hover:bg-red-600 hover:shadow-premium-lg hover:scale-[0.98] cursor-pointer"
+                >
+                  Yes, Delete Listing
+                </Button>
+                <Button
+                  onPress={() => setIsDeleteOpen(false)}
+                  className="h-11 rounded-2xl border border-slate-200 text-slate-600 text-sm font-medium transition-all duration-200 hover:bg-slate-50 hover:scale-[0.98] cursor-pointer"
+                >
+                  Keep Listing
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Edit Modal — inlined JSX, not a component, to preserve focus */}
+      {isEditOpen && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/30 px-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setIsEditOpen(false); }}
+        >
+          <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-premium-xl border border-slate-200 animate-fadeIn">
             <div className="relative p-7">
               {/* Close */}
               <button
@@ -215,7 +234,8 @@ const Manage_button = ({ facility, onDelete, setFacilities }: ManageButtonProps)
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
