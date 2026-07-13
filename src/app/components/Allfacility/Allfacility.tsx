@@ -25,7 +25,7 @@ interface Facility {
 
 const FACILITY_TYPES = [
   "All Facilities",
-  "Football Field",
+  "Football Pitch",
   "Table Tennis",
   "Swimming Pool",
   "Boxing Ring",
