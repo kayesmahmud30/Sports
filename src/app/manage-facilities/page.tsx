@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@heroui/react";
 import { toast } from "react-toastify";
@@ -42,9 +43,15 @@ const ManageSkeletonCard = () => (
 );
 
 const MyFacilities = () => {
+  const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loadingFacilities, setLoadingFacilities] = useState(false);
+
+  // Redirect to login if not authenticated
+  if (!isPending && !session) {
+    router.push("/login?redirect=/manage-facilities");
+  }
 
   useEffect(() => {
     const email = session?.user?.email;

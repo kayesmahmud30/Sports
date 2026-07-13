@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { Calendar, Tag, MapPin, Clock, DollarSign } from "lucide-react";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import React from "react";
 import BookingButtons from "../components/my-booking/BookingButtons";
@@ -29,14 +30,7 @@ const Mybookings = async () => {
   const user = session?.user;
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <h2 className="text-2xl font-bold text-slate-600">Please login to view your bookings</h2>
-          <p className="text-slate-400">Sign in to manage your reservations</p>
-        </div>
-      </div>
-    );
+    redirect("/login?redirect=/my-bookings");
   }
 
   const { token } = await auth.api.getToken({

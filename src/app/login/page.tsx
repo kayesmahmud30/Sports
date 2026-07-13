@@ -23,13 +23,22 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginFormData>();
 
+  // Read the redirect param from URL so users return to their intended page after login
+  const getCallbackUrl = () => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("redirect") || "/";
+    }
+    return "/";
+  };
+
   const onSubmit = async (data: LoginFormData) => {
     try {
       const { email, pass } = data;
       const result = await authClient.signIn.email({
         email,
         password: pass,
-        callbackURL: "/",
+        callbackURL: getCallbackUrl(),
       });
 
       console.log("EMAIL LOGIN:", result);
@@ -45,7 +54,7 @@ const Login = () => {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: getCallbackUrl(),
       });
     } catch (err) {
       console.error("GOOGLE LOGIN ERROR:", err);

@@ -1,6 +1,7 @@
 import FacilityDetailsCard from "@/app/components/FacilityDetailsCard/FacilityDetailsCard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const Details = async ({
@@ -10,10 +11,17 @@ const Details = async ({
 }) => {
   const { id } = await params;
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) {
+    redirect(`/login?redirect=/all-facilities/${id}`);
+  }
+
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-  console.log(token);
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/facility/${id}`,
     {
@@ -23,7 +31,6 @@ const Details = async ({
     },
   );
   const data = await res.json();
-  console.log(data);
   return (
     <div>
       <FacilityDetailsCard key={data._id} data={data} />

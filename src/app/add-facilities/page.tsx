@@ -19,7 +19,13 @@ import type { FormEvent } from "react";
 
 const AddFacilities = () => {
   const router = useRouter();
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
+
+  // Redirect to login if not authenticated (after initial load)
+  if (!isPending && !session) {
+    router.push("/login?redirect=/add-facilities");
+  }
+
   const ownerEmail = session?.user?.email || "owner@sportnest.com";
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {

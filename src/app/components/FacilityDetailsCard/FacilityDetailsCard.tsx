@@ -59,7 +59,7 @@ const FacilityDetailsCard = ({ data }: FacilityDetailsCardProps) => {
 
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) { toast.error("Please login first"); return; }
+    if (!user) { router.push("/login"); return; }
     if (!selectedSlot) { toast.error("Please select a time slot"); return; }
     if (!bookingDate) { toast.error("Please select a date"); return; }
 
