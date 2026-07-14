@@ -4,7 +4,7 @@ SportNest is a modern sports facility booking platform where users can explore, 
 
 ## 🚀 Live Site
 
-🔗 https://sports-nine-eta.vercel.app
+🔗 https://sports-ts.vercel.app
 
 ## 🎯 Purpose
 
@@ -30,6 +30,7 @@ The purpose of SportNest is to provide a smooth and user-friendly platform for b
 
 ## 🛠️ Technologies Used
 
+- Typescript
 - Next.js
 - React
 - Tailwind CSS
@@ -38,9 +39,9 @@ The purpose of SportNest is to provide a smooth and user-friendly platform for b
 - Better Auth
 - Google OAuth
 - MongoDB
-- Axios
 - Framer Motion
 - React Toastify
+- ReChart
 
 ## 📦 NPM Packages
 
