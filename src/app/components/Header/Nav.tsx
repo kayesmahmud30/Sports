@@ -21,6 +21,10 @@ const NAV_LINKS = [
   { href: "/all-facilities", label: "All Facilities" },
 ];
 
+const GUEST_LINKS = [
+  { href: "/contact", label: "Contact" },
+];
+
 const AUTH_LINKS = [
   { href: "/my-bookings", label: "My Bookings", icon: Calendar },
   { href: "/add-facilities", label: "Add Facility", icon: PlusSquare },
@@ -78,6 +82,11 @@ const Nav = () => {
         {/* ── Desktop Nav ── */}
         <nav className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((link) => (
+            <Link key={link.href} href={link.href} className={navLinkClass(link.href)}>
+              {link.label}
+            </Link>
+          ))}
+          {!user && GUEST_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className={navLinkClass(link.href)}>
               {link.label}
             </Link>
@@ -180,6 +189,20 @@ const Nav = () => {
         <div className="md:hidden border-t border-slate-200 bg-white px-4 py-4 shadow-premium-lg animate-fadeIn">
           <nav className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                  isActive(link.href)
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-800"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {!user && GUEST_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
